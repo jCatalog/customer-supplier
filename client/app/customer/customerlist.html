@@ -1,0 +1,36 @@
+<div class="row" ng-controller="customerCtrl" ng-init="customer_list()">
+<!-- 	<div class="col-lg-12 col-md-12">
+		<a class="pull-right" href="/#/tenant/{{tenant_id}}/new_customer"><button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> New Customer</button></a>
+	</div> -->
+	<div class="col-lg-12 col-md-12">
+		<h1>Customers List</h1>
+  </div>
+	<div class="col-lg-12 col-md-12"> 
+    <div ng-hide="customerList.length>0">
+			<h2>Sorry ! There are no customers.</h2>
+		</div>
+		<div class="row">
+			<div class="col-md-9">
+				<table class="table table-bordered table-advance table-hover" ng-show="customerList.length>0">
+		      <thead>
+		        <tr>
+		         <th>#</th> 
+              <th>Customer Id</th>
+		          <th>Customer Name</th>
+		          <th>Customer Group</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		         <tr class="hoverptr" ng-repeat="customer in customerList">
+                <td ng-click="customer_view(tenant_id,  customer._id)">{{$index+1}}</td>
+                <td ng-click="customer_view(tenant_id,  customer._id)">{{customer._id}} </td>
+                <td ng-click="customer_view(tenant_id,  customer._id)">{{customer.customerName}} </td>  
+                <td ng-click="customer_view(tenant_id, customer._id)">{{customer.customerGroup.groupName}}</td>
+		        </tr>
+		        
+		      </tbody>
+		    </table>
+			</div>	
+		</div>
+	</div>
+</div>	

@@ -1,0 +1,592 @@
+ <div class="container" ng-controller="supplierCtrl">
+  <div class="row">
+    <h3 ng-if="page==='new'">New Supplier</h3> 
+    <h3 ng-if="page==='view'">Supplier Details</h3>
+    <h3 ng-if="page==='edit'">Edit Supplier</h3>
+<!--     <a ng-if="accessor==='tenant' && page==='view'" class="pull-right" href="/#/tenant/{{tenant_id}}/supplier/edit/{{supplier._id}}"><button class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</button></a> -->
+    <a ng-if="accessor=='admin' && page=='view'" class="pull-right" href="/#/supplier/edit/{{supplier._id}}"><button class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</button></a>
+    <div class="form-group" ng-show="accessor==='admin' && (page==='new' || page==='edit') " class="col-md-4">
+      <label class="text-danger">Please note that the fields marked with asterisk (*) are mandatory .</label>
+    </div>
+    <form class="form-horizontal" name="supplier_form" novalidate>
+      <section class="row">
+        <div class="col-md-6">
+          <!-- Text input-->
+          <div class="form-group" ng-if="accessor==='tenant'">
+            <label class="col-md-4 control-label">Tenant</label>
+            <div class="col-md-6" ng-show="page==='view'">
+              <label for="">{{supplier.tenantRef.name}}</label>
+            </div>
+          </div>
+          <div class="form-group" ng-if="accessor==='admin'">
+            <label class="col-md-4 control-label">Tenant<span ng-show="supplier.tenantRef === 'null' || supplier.tenantRef._id ==='null'" class="help-inline" style="color:red"> *</span></label>  
+            <div class="col-md-6" ng-show="page==='new'">
+              <select class="form-control" ng-model="supplier.tenantRef" style="width:200px;" ng-init="supplier.tenantRef='null'">
+                <option value="null">choose one tenant</option>                                  
+                <option ng-repeat="tenant in tenantList" value="{{tenant._id}}">{{tenant.name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6" ng-if="page==='view' || page === 'edit'">
+              <label for="">{{supplier.tenantRef.name}}</label>
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Supplier Group<span ng-if="supplier.supplierGroup === 'null' || supplier.supplierGroup._id ==='null'" class="help-inline" style="color:red"> *</span></label>  
+            <div class="col-md-6" ng-show="page=='new'">
+              <select class="form-control" ng-model="supplier.supplierGroup" ng-init="supplier.supplierGroup ='null'" style="width:200px;" >
+                <option ng-repeat="group in sup_gp_dtls" value="{{group._id}}">{{group.groupName}}</option>
+                <option value="null">choose one group</option>                                  
+              </select>
+            </div>
+
+            <div class="col-md-6" ng-if="page==='view'|| page === 'edit'">
+              <label for="">{{supplier.supplierGroup.groupName}}</label>
+            </div>
+          </div>  
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">DunsNo</label>  
+            <div class="col-md-6">
+              <input name="dunsNo" type="text" class="form-control input-md" ng-model="supplier.dunsNo" maxlength="9" ng-readonly="page==='view'" style="width:100px;">
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Supplier Name <span ng-show="supplier_form.supplierName.$error.required" class="help-inline" style="color:red"> *</span></label>  
+            <div class="col-md-6">
+              <input name="supplierName" type="text" ng-pattern="/^[a-zA-Z0-9\s]+$/" class="form-control input-md" ng-model="supplier.supplierName" ng-minlength = "2" maxlength = "30" ng-readonly="page==='view'" required>
+              <span ng-show="supplier_form.supplierName.$error.pattern" class="help-inline" style="color:red">*invalid supplier name</span>
+              <span ng-show="supplier_form.supplierName.$error.minlength" class="help-inline" style="color:red">*too short</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label">External Account Code</label>  
+            <div class="col-md-6">
+              <input name="textinput" type="text" class="form-control input-md" ng-model="supplier.abstractBusinessPartner.extAccountCode" ng-readonly="page==='view'">
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">External Name</label>  
+            <div class="col-md-6">
+              <input name="extName" type="text" class="form-control input-md" ng-model="supplier.abstractBusinessPartner.extName" ng-pattern="/^[a-zA-Z0-9_-\s]+$/" maxlength="30" ng-minlength="2" ng-readonly="page==='view'">
+              <span ng-show="supplier_form.extName.$error.pattern" class="help-inline" style="color:red">*invalid external name</span>
+              <span ng-show="supplier_form.extName.$error.minlength" class="help-inline" style="color:red">*too short </span>
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">External Short Name</label>  
+            <div class="col-md-6">
+              <input name="extShortName" type="text" class="form-control input-md" ng-model="supplier.abstractBusinessPartner.extShortName" ng-pattern="/^[a-zA-Z0-9_-\s]+$/" maxlength="30" ng-minlength="2" ng-readonly="page==='view'">
+              <span ng-show="supplier_form.extShortName.$error.pattern" class="help-inline" style="color:red">*invalid external short name</span>
+              <span ng-show="supplier_form.extShortName.$error.minlength" class="help-inline" style="color:red">*too short</span>
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">External Global Id</label>  
+            <div class="col-md-6">
+              <input id="textinput" name="extGlobalId" type="text" class="form-control input-md" ng-model="supplier.abstractBusinessPartner.extGlobalId" ng-pattern="/^[a-zA-Z0-9\s]+$/" maxlength="40" ng-minlength="2" ng-readonly="page==='view'" style="width:300px;">
+              <span ng-show="supplier_form.extGlobalId.$error.pattern" class="help-inline" style="color:red">*invalid external global id</span>
+              <span ng-show="supplier_form.extGlobalId.$error.maxlength" class="help-inline" style="color:red">*too lengthy</span>
+              <span ng-show="supplier_form.extGlobalId.$error.minlength" class="help-inline" style="color:red">*too short</span>   
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Language</label>  
+            <div class="col-md-6">
+               <select class="form-control" ng-readonly="page=='view'" ng-model="supplier.abstractBusinessPartner.language" style="width:300px;" ng-init="supplier.abstractBusinessPartner.language='null'">
+                  <option value="null">Select Language</option>                                  
+                  <option ng-repeat="lang in language" value="{{lang.code}}">{{lang.name}}</option>
+                </select>
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Currency</label>  
+            <div class="col-md-6">
+              <input name="currency" type="text" class="form-control input-md" ng-model="supplier.abstractBusinessPartner.currency" maxlength="20" ng-readonly="page==='view'" style="width:180px;">
+            </div>
+          </div>
+          
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Logo</label>  
+            <div class="col-md-6">
+              <input type="file" ng-show="page=='edit' || page=='new'" ng-file-select="onFileSelect($files)" >
+                <img ng-if="imageSrc" style="width:50%;margin-top:15px;" ng-src="{{imageSrc}}" />
+                <img ng-if="!imageSrc && page=='view'" style="width:50%;" ng-src="img/Not_available_icon.jpg" />        
+            </div>
+          </div>
+        </div>    
+        <div class="col-md-6">
+          <h2 style="margin-top: 0;">Payment Details</h2>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Terms of Payment</label>  
+            <div class="col-md-6">
+              <textarea name="termsOfPayment" type="text" class="form-control input-md" ng-model="supplier.termsOfPayment" maxlength="50" ng-readonly="page==='view'"></textarea> 
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Terms of Delivery</label>  
+            <div class="col-md-6">
+              <textarea name="termsOfDelivery" type="text" class="form-control input-md" ng-model="supplier.termsOfDelivery" maxlength="50" ng-readonly="page==='view'"></textarea>
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Method of Payment</label>  
+            <div class="col-md-6">
+              <input name="methodOfPayment" type="text" class="form-control input-md" ng-model="supplier.methodOfPayment" maxlength="50" ng-readonly="page==='view'" style="width:300px;">
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Tax Identification No</label>  
+            <div class="col-md-6">
+              <input name="taxIdentificationNo" type="text" class="form-control input-md" ng-model="supplier.taxIdentificationNo" maxlength="50" ng-readonly="page==='view'" style="width:210px;">
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">External Supplies ID</label>  
+            <div class="col-md-6">
+              <input name="extSupplierID" type="text" class="form-control input-md" ng-model="supplier.extSupplierID" maxlength="50" ng-readonly="page==='view'" style="width:210px;">
+            </div>
+          </div>
+
+          <h2>Bank Details</h2>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Account Number</label>  
+            <div class="col-md-6">
+              <input name="accountNumber" type="text" class="form-control input-md" ng-model="supplier.accountNumber" maxlength="50" ng-readonly="page==='view'" style="width:210px;">
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Bank Identification Code</label>  
+            <div class="col-md-6">
+              <input name="bankIdentificationCode" type="text" class="form-control input-md" ng-model="supplier.bankIdentificationCode" maxlength="11" ng-readonly="page==='view'" style="width:100px;">
+            </div>
+          </div>
+          
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Swift Code</label>  
+            <div class="col-md-6">
+              <input name="swiftCode" type="text" class="form-control input-md" ng-model="supplier.swiftCode" maxlength="11" ng-readonly="page==='view'" style="width:100px;">
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">Bank Country Key</label>  
+            <div class="col-md-6">
+              <input name="bankCountryKey" type="text" class="form-control input-md" ng-model="supplier.bankCountryKey" maxlength="20" ng-pattern="/^[a-zA-Z0-9]+$/" ng-readonly="page==='view'" style="width:200px;">
+              <span ng-show="supplier_form.bankCountryKey.$error.pattern" class="help-inline" style="color:red">*invalid bank country key</span>
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label">External Bank Control Key</label>  
+            <div class="col-md-6">
+              <input name="extBankControlKey" type="text" class="form-control input-md" ng-model="supplier.extBankControlKey" maxlength="20" ng-pattern="/^[a-zA-Z0-9]+$/" ng-readonly="page==='view'" style="width:200px;">
+              <span ng-show="supplier_form.extBankControlKey.$error.pattern" class="help-inline" style="color:red">*invalid external bank control key</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="row">
+       <div class="col-md-12"> 
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><b>Contacts</b></h3>
+            </div>
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item" ng-show="contacts.length==0">0 contacts added</li>
+                <li class="list-group-item" ng-repeat="contact in contacts">{{contact.firstName}} {{contact.lastName}}
+                  <button  ng-if="page!='view'" type="button" class="btn btn-primary pull-right btn-sm" data-toggle="modal" ng-click="edit_contact(contact)" style="position: relative;bottom: 6px;">Edit
+                  </button>
+                  <button  ng-if="page!='view'" type="button" class="btn btn-primary pull-right btn-sm" data-toggle="modal" ng-click="delete_contact($index)" style="position: relative;bottom: 6px;margin-right:4px;">Delete
+                  </button>
+                  <button  ng-if="page==='view'" type="button" class="btn btn-primary pull-right btn-sm" data-toggle="modal" ng-click="edit_contact(contact)" style="position: relative;bottom: 6px;">View
+                  </button>
+                </li>
+              </ul>
+              <!-- Button trigger modal -->
+              <button ng-if="page!='view'" class="btn btn-primary" data-toggle="modal" ng-click="new_contact()">+Add Contact
+              </button>
+            </div>
+          </div>
+          
+          <!-- Contact Modal -->
+          <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4 ng-hide="edit_flag" class="modal-title" id="myModalLabel">New Contact</h4> 
+                  <h4 ng-show="page==='view'" class="modal-title" id="myModalLabel">Contact Details</h4>
+                  <h4 ng-show="edit_flag" class="modal-title" id="myModalLabel">Edit Contact</h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                  <div class="col-md-6">
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="textinput">Contact Type</label>  
+                      <div class="col-md-8">
+                        <select class="form-control" ng-model="newContact.contactType" ng-readonly="page==='view'" style="width:200px;">
+                            <option value="">Select Contact Type</option>
+                            <option value="type1">Contact Type1</option>
+                            <option value="type2">Contact Type2</option>
+                            <option value="type3">Contact Type3</option>
+                          </select>
+
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">First Name<span ng-show="newContact.firstName === undefined || newContact.firstName === ''" class="help-inline" style="color:red"> *</span></label>  
+                      <div class="col-md-8">
+                        <input name="firstName" type="text" class="form-control input-md" ng-model="newContact.firstName" maxlength="20" ng-pattern="/^[a-zA-Z0-9\s]+$/" ng-readonly="page==='view'">
+                        <span ng-show="supplier_form.firstName.$error.pattern" class="help-inline" style="color:red">*invalid first name</span>
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">Last Name<span ng-show="newContact.lastName === undefined || newContact.lastName === ''" class="help-inline" style="color:red"> *</span></label>  
+                      <div class="col-md-8">
+                        <input name="lastName" type="text" class="form-control input-md" ng-model="newContact.lastName" maxlength="20" ng-pattern="/^[a-zA-Z0-9\s]+$/" ng-readonly="page==='view'">
+                        <span ng-show="supplier_form.lastName.$error.pattern" class="help-inline" style="color:red">*invalid last name</span>
+                      </div>
+                    </div>
+                    
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">Department</label>  
+                      <div class="col-md-8">
+                        <input name="department" type="text" class="form-control input-md" ng-model="newContact.department" maxlength="20" ng-readonly="page==='view'">
+                      </div>
+                    </div>     
+                    <!-- Text area-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">Description</label>  
+                      <div class="col-md-8">
+                        <textarea name="description" type="text" class="form-control input-md" ng-pattern = "/^[a-zA-Z\s]+$/" ng-model="newContact.description" maxlength="240" ng-readonly="page==='view'">
+                        </textarea>
+                        <span ng-show="supplier_form.description.$error.pattern" class="help-inline" style="color:red">*invalid description
+                        </span>
+                      </div>
+                    </div>
+                  </div> <!-- end of left column in contact form -->
+                  <div class="col-md-6">
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="textinput">Email<span ng-show="newContact.email === undefined || newContact.email === ''" class="help-inline" style="color:red"> *</span></label>  
+                      <div class="col-md-8">
+                        <input id="textinput" name="email" type="email" class="form-control input-md" ng-model="newContact.email" ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-readonly="page==='view'">
+                        <span ng-show="supplier_form.email.$error.pattern" class="help-inline" style="color:red">*Invalid email</span>
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="textinput">Phone</label>  
+                      <div class="col-md-8">
+                        <input id="textinput" name="phone" type="text" class="form-control input-md" ng-model="newContact.phone" ng-readonly="page==='view'" style="width:200px;" ng-pattern="/^[\0-9() -+]{3,50}$/">
+                        <span ng-show="supplier_form.phone.$error.pattern" class="help-inline" style="color:red">*Invalid phone number</span>
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="textinput">Alternate Phone</label>  
+                      <div class="col-md-8">
+                        <input id="textinput" name="alternatePhone" type="text" class="form-control input-md" ng-model="newContact.alternatePhone" ng-readonly="page==='view'" style="width:200px;" ng-pattern="/^[\0-9() -+]{3,50}$/">
+                        <span ng-show="supplier_form.alternatePhone.$error.pattern" class="help-inline" style="color:red">*Invalid phone number</span>
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="textinput">Mobile</label>  
+                      <div class="col-md-8">
+                        <input id="textinput" name="mobile" type="text" class="form-control input-md" ng-model="newContact.mobile" ng-pattern="/^\+?[0-9]+$/" ng-readonly="page==='view'" style="width:200px;">
+                        <span ng-show="supplier_form.mobile.$error.pattern" class="help-inline" style="color:red">*Invalid mobile number</span>
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="textinput">URL</label>  
+                      <div class="col-md-8">
+                        <input id="textinput" name="url" type="text" class="form-control input-md" ng-model="newContact.url" style="width:px;" ng-readonly="page==='view'" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
+                        <span ng-show="supplier_form.url.$error.pattern" class="help-inline" style="color:red">*Invalid url</span>
+                      </div>
+                    </div>
+                  </div> <!-- end of right column in contact form -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addContact(newContact)">Add</button>
+                   <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- contact modal end -->
+    
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><b>Addresses</b></h3>
+            </div>
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item" ng-show="addresses.length==0">0 addresses added</li>
+                <li class="list-group-item" ng-repeat="addr in addresses">{{addr.salutation}}{{addr.name1}}-{{addr.phoneNo}}
+                  <button ng-if="page!='view'" class="btn btn-primary pull-right btn-sm" type="button" class="btn btn-primary pull-right" data-toggle="modal" ng-click="edit_address(addr)" style="position: relative;bottom: 6px;">Edit</button>
+                  <button  ng-if="page!='view'" type="button" class="btn btn-primary pull-right btn-sm" data-toggle="modal" ng-click="delete_address($index)" style="position: relative;bottom: 6px;margin-right:4px;">Delete
+                </button>
+                <button  ng-if="page==='view'" type="button" class="btn btn-primary pull-right btn-sm" data-toggle="modal" ng-click="edit_address(addr)" style="position: relative;bottom: 6px;">View
+                </button>
+                </li>
+              </ul>
+              <!-- Button trigger modal -->
+              <button ng-if="page!='view'" class="btn btn-primary" data-toggle="modal" ng-click="new_address()" >
+              + Add Address
+              </button>     
+            </div>
+          </div>      
+          <!-- Modal -->
+          <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>            
+                  <h4 ng-hide="edit_flag" class="modal-title" id="myModalLabel">New Address</h4> 
+                  <h4 ng-show="page==='view'" class="mo dal-title" id="myModalLabel">Address Details</h4>
+                  <h4 ng-show="edit_flg && page==='edit'" class="modal-title" id="myModalLabel">Edit Address</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="container" style="max-width: 100% !important">
+                    <div class="row">
+                      <div class="col-md-6">
+                      <h2>Address details</h2>
+                        <!-- Text input-->
+                        <div class="form-group">
+                        <label class="col-md-4 control-label">Name 1<span ng-show="newAddr.name1 === undefined || newAddr.name1 === ''" class="help-inline" style="color:red"> *</span></label>  
+                        <div class="col-md-8">
+                           <input ng-model="newAddr.name1" name="name1" type="text" class="form-control input-md" maxlength="20" ng-readonly="page==='view'" ng-pattern="/^[a-zA-Z0-9\s]+$/" style="width:200px;">
+                          <span ng-show="supplier_form.name1.$error.pattern" class="help-inline" style="color:red">*invalid name 1</span>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="col-md-4 control-label">Name 2</label>  
+                        <div class="col-md-8">
+                          <input ng-model="newAddr.name2" name="name2" type="text" maxlength="20" class="form-control input-md" ng-readonly="page==='view'" ng-pattern="/^[a-zA-Z0-9\s]+$/" style="width:200px;">
+                          <span ng-show="supplier_form.name2.$error.pattern" class="help-inline" style="color:red">*invalid name 2</span>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="col-md-4 control-label">Name 3</label>  
+                        <div class="col-md-8">
+                          <input ng-model="newAddr.name3" name="name3" type="text" maxlength="20" class="form-control input-md" ng-readonly="page==='view'" ng-pattern="/^[a-zA-Z0-9\s]+$/" style="width:200px;">
+                          <span ng-show="supplier_form.name3.$error.pattern" class="help-inline" style="color:red">*invalid name 3</span>
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Address Type</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.addressType" name="textinput" type="text" class="form-control input-md" style="width:200px;" ng-readonly="page==='view'" maxlength="10">       
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Street</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.street" name="street" type="text" class="form-control input-md" maxlength="20" ng-readonly="page==='view'">
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">City<span ng-show="newAddr.city === undefined || newAddr.city === ''" class="help-inline" style="color:red"> *</span></label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.city" name="city" type="text" class="form-control input-md" maxlength="20" ng-readonly="page==='view'" style="width:200px;">
+                          </div>
+                        </div>
+                        
+                         <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Zip Code</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.zipCode" name="zipCode" type="text" class="form-control input-md" ng-maxlength="20" ng-readonly="page==='view'" style="width:200px;" ng-pattern="/^[a-zA-Z0-9]+$/">
+                            <span ng-show="supplier_form.zipCode.$error.pattern" class="help-inline" style="color:red">*Invalid zipcode</span>
+                          </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">State</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.state" name="state" type="text" class="form-control input-md" maxlength="20" ng-readonly="page==='view'" style="width:220px;">
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Country<span ng-show="newAddr.country === undefined" class="help-inline" style="color:red"> *</span></label>  
+                          <div class="col-md-8">
+                            <select class="form-control" ng-readonly="page=='view'" ng-model="newAddr.country" style="width:200px;">
+                              <option value="">Select Country</option>                                  
+                              <option ng-repeat="count in country" value="{{count.code}}">{{count.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">PO Box</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.pobox" name="pobox" type="text" class="form-control input-md" maxlength="20" ng-readonly="page==='view'" style="width:200px;"  ng-pattern="/^[a-zA-Z0-9]+$/">
+                            <span ng-show="supplier_form.pobox.$error.pattern" class="help-inline" style="color:red">*invalid po box</span>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">PO Box Zip Code</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.poboxZipCode" name="poboxZipCode" type="text" class="form-control input-md" ng-maxlength="20" ng-readonly="page==='view'" style="width:200px;"  ng-pattern="/^[a-zA-Z0-9]+$/">
+                            <span ng-show="supplier_form.poboxZipCode.$error.pattern" class="help-inline" style="color:red">*invalid po box zip code</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        
+                        <h2>Personal Info</h2>
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Phone No.</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.phoneNo" name="phoneNo" type="text" class="form-control input-md" ng-readonly="page==='view'" style="width:200px;" ng-pattern="/^[\0-9() -+]{3,50}$/">
+                            <span ng-show="supplier_form.phoneNo.$error.pattern" class="help-inline" style="color:red">*Invalid phone number</span>
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Fax No.</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.faxNo" name="faxNo" type="text" class="form-control input-md" ng-pattern="/^[\0-9() -+]{3,50}$/" ng-readonly="page==='view'" style="width:200px;">
+                            <span ng-show="supplier_form.faxNo.$error.pattern" class="help-inline" style="color:red">*Invalid Fax number</span>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Email</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.email" name="email_add" type="text" class="form-control input-md" ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-readonly="page==='view'" style="width:200px;">
+                            <span ng-show="supplier_form.email_add.$error.pattern" class="help-inline" style="color:red">*Invalid e-mail</span>
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Corporate URL</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.corporateURL" name="corporateurl" type="text" class="form-control input-md" ng-readonly="page==='view'" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
+                            <span ng-show="supplier_form.corporateurl.$error.pattern" class="help-inline" style="color:red">*Invalid corporate url</span>
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Is Company</label>  
+                          <div class="col-md-8" ng-if ="page==='new' || page === 'edit'">
+                            <input type="radio" ng-model="newAddr.isCompany" ng-value="true" name="isCompany" ng-init="newAddr.isCompany='true'">True &nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="radio" ng-model="newAddr.isCompany" name="isCompany" ng-value="false">False
+                          </div>
+                          <div class="col-md-8" ng-if ="page==='view'">
+                            <label for="">{{newAddr.isCompany}}</label>
+                          </div>  
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">No. Of Employees</label>  
+                          <div class="col-md-8">
+                            <input ng-model="newAddr.numOfEmployees" name="numOfEmployees" type="text" class="form-control input-md" ng-pattern="/^[0-9]*$/" style="width:150px;" ng-readonly="page==='view'">
+                            <span ng-show="supplier_form.numOfEmployees.$error.pattern" class="help-inline" style="color:red">*Invalid no. of employees</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addAddress(newAddr)">Add</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- modal end -->    
+        </div>  
+      </section>
+      <!--   new page -->    
+      <br><br>
+      <div ng-show="page==='new'" class="col-md-2 col-md-offset-3">
+        <button ng-click="submit(supplier,contacts,addresses)" class="btn btn-primary btn-block">Submit</button>
+      </div>
+      <div ng-show="page==='new'" class="col-md-2">
+        <button ng-click="cancel_new()" class="btn btn-primary btn-block">Reset</button>
+      </div>
+      <div ng-show="page==='new' && accessor==='tenant'" class="col-md-2">
+        <button class="btn btn-primary btn-block" ng-click="back_new()">Back</button>
+      </div> 
+      <div ng-show="page==='new' && accessor==='admin'" class="col-md-2">
+        <a href="/#/suppliers"><button class="btn btn-primary btn-block" ng-click="back_new()">Cancel</button></a>
+      </div> 
+      <!-- edit page -->  
+      <div ng-show="page==='edit'" class="col-md-2 col-md-offset-4">
+        <button ng-click="update(supplier,contacts,addresses)" class="btn btn-primary btn-block">Update</button>
+      </div>
+    
+      <div ng-show="page==='edit' && accessor==='tenant'" class="col-md-2">
+        <a href="/#/tenant/{{tenant_id}}/supplier/{{supp_id}}" class="btn btn-primary btn-block">Cancel</a>
+      </div>
+      <div ng-show="page==='edit' && accessor==='admin'" class="col-md-2">
+        <a href="/#/supplier/{{supp_id}}" class="btn btn-primary btn-block">Cancel</a>
+      </div>
+      <!-- view page -->
+<!--     <div ng-show="accessor==='tenant' && page==='view'"  class="col-md-2 col-md-offset-4">
+     <a  href="/#/tenant/{{tenant_id}}/supplier/edit/{{supplier._id}}" class="btn btn-primary btn-block"> Edit</a>
+    </div> -->
+    <div ng-show="accessor=='admin' && page=='view'" class="col-md-2 col-md-offset-4">
+      <a  href="/#/supplier/edit/{{supplier._id}}" class="btn btn-primary btn-block"> Edit</a>
+    </div>
+      <div ng-show="page==='view' && accessor==='admin'" class="col-md-2">
+        <a href="/#/suppliers">
+        <button class="btn btn-primary btn-block">Cancel</button></a>
+      </div>
+      <div ng-show="page==='view' && accessor==='tenant'" class="col-md-2 col-md-offset-5">
+        <a href="/#/tenant/{{tenant_id}}" class="btn btn-primary btn-block">Back</a>
+      </div>
+    </form>  
+  </div>
+</div>
+<footer><br><br></footer>
+<script type="text/ng-template" id="myModalContent.html">
+   <div class="modal-body">
+       <p>Please enter valid datas</p>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-default" ng-click="cancel()">Ok</button>
+  </div>
+</script>  

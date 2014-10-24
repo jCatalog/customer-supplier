@@ -1,0 +1,38 @@
+<!-- <div class="row" ng-controller="searchCtrl"> -->
+<div class="row" ng-controller="searchCtrl">
+	
+  <div class="col-lg-12 col-md-12" ng-show="srchResult.List.length==0 && searchDirty==true">
+    <div class="row">
+      <h3>Sorry, search returned <b>0</b> results</h3>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-md-12" ng-show="srchResult.List.length!=0 && searchDirty==true">
+    <div class="row">
+      <h3>Search results - <b>{{srchResult.List.length}}</b> {{Resrcname}}s</h3>
+    </div>
+    <div class="row">
+      <div class="col-lg-9 col-md-9 col-sm-9">
+        <table class="table table-stripped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="customer in srchResult.List" ng-if="resrcname=='customer'">
+              <td>{{customer._id}}</td>
+              <td><a href="/#/customer/{{customer._id}}">{{customer.customerName}}</a></td>
+            </tr>
+            <tr ng-repeat="supplier in srchResult.List" ng-if="resrcname=='supplier'">
+              <td>{{supplier._id}}</td>
+              <td><a href="/#/supplier/{{supplier._id}}">{{supplier.supplierName}}</a></td>
+            </tr>            
+          </tbody>
+        </table>
+      </div>  
+    </div>
+  </div>
+
+</div>

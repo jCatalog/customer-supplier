@@ -1,0 +1,35 @@
+<div class="row" ng-controller="supplierCtrl" ng-init="fetch_data()">
+<!-- 	<div class="col-lg-12 col-md-12">
+		<a class="pull-right" href="/#/tenant/{{tenant_id}}/new_supplier"><button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> New Supplier</button></a>
+	</div> -->
+	<div class="col-lg-12 col-md-12">
+		<h1>Suppliers List</h1>
+  </div>
+	<div class="col-lg-12 col-md-12"> 
+    <div ng-hide="supplierData.length>0">
+			<h2>Sorry ! There are no customers.</h2>
+		</div>
+		<div class="row">
+			<div class="col-lg-9 col-md-9 col-sm-9">
+				<table class="table table-bordered table-advance table-hover" ng-show="supplierData.length>0">
+		      <thead>
+		        <tr>
+               <th>#</th> 
+		          <th>Supplier Id</th>
+		          <th>Supplier Name</th>
+		          <th>Supplier Group</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		         <tr class="hoverptr" ng-repeat="sd in supplierData">
+              <td ng-click="supplier_view(tenant_id,  sd._id)">{{$index+1}}</td>
+		          <td ng-click="supplier_view(tenant_id,  sd._id)">{{sd._id}}</td>
+		          <td ng-click="supplier_view(tenant_id,  sd._id)">{{sd.supplierName}}
+		          <td ng-click="supplier_view(tenant_id,  sd._id)">{{sd.supplierGroup.groupName}}</td>
+		        </tr>
+		      </tbody>
+		    </table>
+			</div>	
+		</div>
+	</div>
+</div>	

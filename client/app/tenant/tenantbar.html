@@ -1,0 +1,15 @@
+<div class="container" ng-controller="tenantCtrl">
+  <div class="row">
+    <tabset>
+      <tab heading="Details" active="tenantbar.tabs[0].active">
+        <div class="tab-set" ng-include="'tenant/tenant_details.html'"></div>
+      </tab>
+      <tab heading="Customers" active="tenantbar.tabs[1].active">
+        <div class="tab-set" ng-include="'customer/customerlist.html'" ></div>
+      </tab>
+      <tab heading="Suppliers" active="tenantbar.tabs[2].active">
+        <div class="tab-set" ng-include="'supplier/supplierlist.html'"></div>
+      </tab>
+    </tabset>
+  </div>
+</div>

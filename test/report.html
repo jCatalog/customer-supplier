@@ -1,0 +1,215 @@
+    <section class="suite">
+      <h1>Customer</h1>
+      <dl>
+        <section class="suite">
+          <h1>Customer operation</h1>
+          <dl>
+Connection with database succeeded.
+            <dt>Customer create</dt>
+            <dd><pre><code>var customer = new Customer(Config.createCustomer);
+customer.save(done);</code></pre></dd>
+            <dt>Customer get all</dt>
+            <dd><pre><code>Customer.find({},function(err, res){
+  if (err) return done(err);
+  done();
+});</code></pre></dd>
+            <dt>Customer get by id</dt>
+            <dd><pre><code>Customer.findById(Config.customerId,function(err, res){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>Customer update by id</dt>
+            <dd><pre><code>Customer.findById(Config.customerId,function(err, customer){
+    if (err) return done(err);
+    else if(customer === null)  done();
+    else{
+        Config.customerfunc(Config.editCustomer, customer);
+        customer.save(done);
+    }
+  });</code></pre></dd>
+            <dt>Customer delete</dt>
+            <dd><pre><code>Customer.findById(Config.deleteCustomer,function(err, customer){
+    if (err) return done(err);
+    else if(customer === null) done();
+    else customer.remove(done);
+  });</code></pre></dd>
+            <dt>get customer by tenant id</dt>
+            <dd><pre><code>Customer.find(Config.byTenant,function(err, customer){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>get customer by search</dt>
+            <dd><pre><code>var obj = {};
+Config.bySearch(obj);
+Customer.find(obj,function(err, customer){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>CustomerGroup</h1>
+      <dl>
+        <section class="suite">
+          <h1>CustomerGroup CRUD operation</h1>
+          <dl>
+            <dt>CustomerGroup create</dt>
+            <dd><pre><code>var customerGroup = new CustomerGroup(Config.createCustomerGroup);
+customerGroup.save(done);</code></pre></dd>
+            <dt>CustomerGroup get all</dt>
+            <dd><pre><code>CustomerGroup.find({},function(err, res){
+  if (err) return done(err);
+  done();
+});</code></pre></dd>
+            <dt>CustomerGroup get by id</dt>
+            <dd><pre><code>CustomerGroup.findById(Config.customerGroupId,function(err, res){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>CustomerGroup update by id</dt>
+            <dd><pre><code>CustomerGroup.findById(Config.customerGroupId,function(err, customerGroup){
+    if (err) return done(err);
+    else if(customerGroup === null)  done();
+    else{
+        customerGroup.groupName = Config.editCustomerGroup.groupName;
+        customerGroup.save(done);
+    }
+  });</code></pre></dd>
+            <dt>CustomerGroup delete</dt>
+            <dd><pre><code>CustomerGroup.findById(Config.deleteCustomerGroup,function(err, customerGroup){
+    if (err) return done(err);
+    else if(customerGroup === null) done();
+    else customerGroup.remove(done);
+  });</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Supplier</h1>
+      <dl>
+        <section class="suite">
+          <h1>Supplier operation</h1>
+          <dl>
+            <dt>Supplier create</dt>
+            <dd><pre><code>var supplier = new Supplier(Config.createSupplier);
+supplier.save(done);</code></pre></dd>
+            <dt>Supplier get all</dt>
+            <dd><pre><code>Supplier.find({},function(err, res){
+  if (err) return done(err);
+  done();
+});</code></pre></dd>
+            <dt>Supplier get by id</dt>
+            <dd><pre><code>Supplier.findById(Config.supplierId,function(err, res){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>Supplier update by id</dt>
+            <dd><pre><code>Supplier.findById(Config.supplierId,function(err, supplier){
+    if (err) return done(err);
+    else if(supplier === null)  done();
+    else{
+        Config.supplierfunc(Config.editSupplier, supplier);
+        supplier.save(done);
+    }
+  });</code></pre></dd>
+            <dt>Supplier delete</dt>
+            <dd><pre><code>Supplier.findById(Config.deleteCustomer,function(err, supplier){
+    if (err) return done(err);
+    else if(supplier === null) done();
+    else supplier.remove(done);
+  });</code></pre></dd>
+            <dt>get Supplier by tenant id</dt>
+            <dd><pre><code>Supplier.find(Config.byTenant,function(err, supplier){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>get Supplier by search</dt>
+            <dd><pre><code>var obj = {};
+Config.bySearch(obj);
+Supplier.find(obj,function(err, supplier){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>SupplierGroup</h1>
+      <dl>
+        <section class="suite">
+          <h1>SupplierGroup CRUD operation</h1>
+          <dl>
+            <dt>SupplierGroup create</dt>
+            <dd><pre><code>var supplierGroup = new SupplierGroup(Config.createSupplierGroup);
+supplierGroup.save(done);</code></pre></dd>
+            <dt>SupplierGroup get all</dt>
+            <dd><pre><code>SupplierGroup.find({},function(err, res){
+  if (err) return done(err);
+  done();
+});</code></pre></dd>
+            <dt>SupplierGroup get by id</dt>
+            <dd><pre><code>SupplierGroup.findById(Config.supplierGroupId,function(err, res){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>SupplierGroup update by id</dt>
+            <dd><pre><code>SupplierGroup.findById(Config.supplierGroupId,function(err, supplierGroup){
+    if (err) return done(err);
+    else if(supplierGroup === null)  done();
+    else{
+        supplierGroup.groupName = Config.editSupplierGroup.groupName;
+        supplierGroup.save(done);
+    }
+  });</code></pre></dd>
+            <dt>SupplierGroup delete</dt>
+            <dd><pre><code>SupplierGroup.findById(Config.deleteSupplierGroup,function(err, supplierGroup){
+    if (err) return done(err);
+    else if(supplierGroup === null) done();
+    else supplierGroup.remove(done);
+  });</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Tenant</h1>
+      <dl>
+        <section class="suite">
+          <h1>Tenant CRUD operations</h1>
+          <dl>
+            <dt>tenant create</dt>
+            <dd><pre><code>var tenant = new Tenant(Config.createTenant);
+tenant.save(done);</code></pre></dd>
+            <dt>tenant getAll</dt>
+            <dd><pre><code>Tenant.find({},function(err, res){
+  if (err) return done(err);
+  done();
+});</code></pre></dd>
+            <dt>tenant getById</dt>
+            <dd><pre><code>Tenant.findById(Config.tenantId,function(err, res){
+    if (err) return done(err);
+    done();
+  });</code></pre></dd>
+            <dt>tenant updateById</dt>
+            <dd><pre><code>Tenant.findById(Config.tenantId,function(err, tenant){
+    if (err) return done(err);
+    else if(tenant === null)  done();
+    else{
+        Config.tenantfunc(Config.editTenant, tenant);
+        tenant.save(done);
+    }
+  });</code></pre></dd>
+            <dt>tenant delete</dt>
+            <dd><pre><code>Tenant.findById(Config.deleteTenant,function(err, tenant){
+    if (err) return done(err);
+    else if(tenant === null) done();
+    else tenant.remove(done);
+  });</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>

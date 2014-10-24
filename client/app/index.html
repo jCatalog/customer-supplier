@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PIMX</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+    <link rel="stylesheet" href="app.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-jc-v8-theme.css">
+    <link rel="stylesheet" href="css/additional.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/growl.css">
+
+   
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+<body>
+
+<div class="navbar navbar-default navbar-main-menu" ng-controller="headerCtrl"><!-- main nav -->
+      <div data-growl=""></div>
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img src="img/jc-logo-rgb.svg" style="height: 1.5em; margin-top: -.25em; margin-bottom: -.25em;">
+        </a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            
+            <li ng-class="{'active': isActive('customer') || isActive('/')}"><a href="/#/customers">Customers</a></li>
+            <li ng-class="{'active': isActive('supplier')}"><a href="/#/suppliers">Suppliers</a></li>
+          <li ng-class="{'active': isActive('tenant')}"><a href="/#/tenants">Tenants</a></li>
+           
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!-- /main nav -->
+
+
+  <div ng-view class="container"></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+
+  <script src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<!--   <script src="bower_components/angular-animate.js"></script> -->
+  <script src="bower_components/angular-growl.js"></script>
+  <script src="bower_components/angular-sanitize.js"></script>  
+  <script src="js/jquery-2.1.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/respond.js"></script>
+  <script src="app.js"></script>
+  <script src="js/upload.js"></script>
+  <script src="tenant/tenantService.js"></script>
+  <script src="customer/customerService.js"></script>
+  <script src="supplier/supplierService.js"></script>
+  <script src="tenant/tenantCtrl.js"></script>
+  <script src="customer/customerCtrl.js"></script>
+  <script src="supplier/supplierCtrl.js"></script>
+  <script src="customer/searchCstmrCtrl.js"></script>
+  <script src="supplier/searchSpplrCtrl.js"></script>
+  <script src="headerCtrl.js"></script>
+
+
+</body>
+</html>
