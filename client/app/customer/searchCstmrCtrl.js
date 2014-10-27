@@ -20,6 +20,7 @@ myApp.controller('searchCstmrCtrl', [ '$scope', '$http', '$routeParams','$locati
         customer.delete({url:'customers',
         customer_id:cus_id}).$promise.then(function(data){
           $scope.srch.customer.resultList.splice(index,1);
+          $scope.filtered();
           growl.addSuccessMessage('Customer removed Succesfully');
         }).catch(function(error){
             growl.addErrorMessage("oops! Something went wrong");
@@ -67,7 +68,10 @@ myApp.controller('searchCstmrCtrl', [ '$scope', '$http', '$routeParams','$locati
     $scope.groupToPages = function () {
       $scope.pagedItems = [];
       $scope.filteredItems = $scope.srch.customer.resultList;
-      //console.log($scope.filteredItems);
+      $scope.filtered();
+    };
+
+    $scope.filtered = function () {
       if($scope.filteredItems){
         for (var i = 0; i < $scope.filteredItems.length; i++) {
             if (i % $scope.itemsPerPage === 0) {
@@ -77,10 +81,9 @@ myApp.controller('searchCstmrCtrl', [ '$scope', '$http', '$routeParams','$locati
             }
         }
       }   
-    };
+    }
  
   $scope.groupToPages();
-  
 	$scope.search = function(resrcname){
     var resrc = customer;
     var srchObj = $rootScope.srch.customer;

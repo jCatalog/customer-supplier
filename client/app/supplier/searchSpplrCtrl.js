@@ -17,6 +17,7 @@ myApp.controller('searchSpplrCtrl', ['$scope', '$http', '$routeParams','$locatio
         supplier.delete({url:'suppliers',
         supplier_id:supp_id}).$promise.then(function(data){	
           $scope.srch.supplier.resultList.splice(index,1);
+          $scope.filtered();
           growl.addSuccessMessage('Supplier removed Succesfully');
         }).catch(function(error){
             growl.addErrorMessage("oops! Something went wrong");
@@ -68,17 +69,20 @@ myApp.controller('searchSpplrCtrl', ['$scope', '$http', '$routeParams','$locatio
     $scope.groupToPages = function () {
       $scope.pagedItems = [];
       $scope.filteredItems = $scope.srch.supplier.resultList;
-       //console.log($scope.filteredItems);
-      if($scope.filteredItems){
-        for (var i = 0; i < $scope.filteredItems.length; i++) {
-            if (i % $scope.itemsPerPage === 0) {
-                $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
-            } else {
-                $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
-            }
-        }
-      }   
+      $scope.filtered();   
     };
+
+    $scope.filtered = function () {
+      if($scope.filteredItems){
+          for (var i = 0; i < $scope.filteredItems.length; i++) {
+              if (i % $scope.itemsPerPage === 0) {
+                  $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+              } else {
+                  $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+              }
+          }
+      }
+    }
  
   $scope.groupToPages();
   
