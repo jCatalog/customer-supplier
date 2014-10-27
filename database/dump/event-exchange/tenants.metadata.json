@@ -1,1 +1,0 @@
-{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "event-exchange.tenants", "name" : "_id_" }, { "v" : 1, "key" : { "tenantId" : 1 }, "unique" : true, "ns" : "event-exchange.tenants", "name" : "tenantId_1", "background" : true, "safe" : null } ] }
