@@ -196,6 +196,7 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
 			{
         if($scope.contactValidation()){
             growl.addErrorMessage('please enter required and valid field to update contact');
+            $scope.contactReset();
          }
         else{
           for(i=0;i<$scope.contacts.length;i++)
@@ -213,6 +214,7 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
       {
          if( $scope.contactValidation()){
             growl.addErrorMessage('please enter required and valid field to create new contact');
+            $scope.contactReset();
          }
         else{
           growl.addSuccessMessage('new contact created');
@@ -240,6 +242,7 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
 			{	
         if( $scope.addressValidation()){
             growl.addErrorMessage('please enter required and valid field to update address');
+            $scope.addressReset();
          }
           else{
             for(i=0;i<$scope.addresses.length;i++)
@@ -256,6 +259,7 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
       {
          if( $scope.addressValidation()){
             growl.addErrorMessage('please enter required and valid field to create new address');
+            $scope.addressReset();
          }
           else{
           growl.addSuccessMessage('new address added');
@@ -363,7 +367,32 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
    }
     $scope.addressValidation = function(){
       return ($scope.newAddr.name1 === undefined || $scope.newAddr.name1 === ''  || $scope.newAddr.country === undefined || $scope.newAddr.country ==='' || $scope.newAddr.city === undefined || $scope.newAddr.city === '' || $scope.customer_create.name1.$error.pattern || $scope.customer_create.name2.$error.pattern || $scope.customer_create.name3.$error.pattern || $scope.customer_create.zipCode.$error.pattern || $scope.customer_create.pobox.$error.pattern || $scope.customer_create.poboxZipCode.$error.pattern || $scope.customer_create.phoneNo.$error.pattern || $scope.customer_create.faxNo.$error.pattern || $scope.customer_create.email_add.$error.pattern || $scope.customer_create.corporateurl.$error.pattern || $scope.customer_create.numOfEmployees.$error.pattern);   
-}
+	}
+	$scope.addressReset = function(){
+		$scope.newAddr.name1 = '';
+		$scope.newAddr.name2 = '';
+		$scope.newAddr.name3 = '';
+		$scope.newAddr.country = '';
+		$scope.newAddr.city = '';
+		$scope.newAddr.zipCode = '';
+		$scope.newAddr.pobox = '';
+		$scope.newAddr.poboxZipCode = '';
+		$scope.newAddr.phoneNo = '';
+		$scope.newAddr.faxNo='';
+		$scope.newAddr.email ='';
+		$scope.newAddr.corporateURL ='';
+		$scope.newAddr.numOfEmployees ='';
+	}
+	 $scope.contactReset = function(){
+	 	$scope.newContact.firstName = '';
+	 	$scope.newContact.lastName = '';
+	 	$scope.newContact.email = '';
+	 	$scope.newContact.description = '';
+	 	$scope.newContact.phone = '';
+	 	$scope.newContact.alternatePhone = '';
+	 	$scope.newContact.mobile = '';
+	 	$scope.newContact.url = '';
+	 }
     
 }]); 
 myApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {

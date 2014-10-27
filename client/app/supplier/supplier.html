@@ -99,8 +99,8 @@
           <div class="form-group">
             <label class="col-md-4 control-label">Language</label>  
             <div class="col-md-6">
-               <select class="form-control" ng-readonly="page=='view'" ng-model="supplier.abstractBusinessPartner.language" style="width:300px;" ng-init="supplier.abstractBusinessPartner.language='null'">
-                  <option value="null">Select Language</option>                                  
+               <select class="form-control" ng-readonly="page=='view'" ng-model="supplier.abstractBusinessPartner.language" style="width:300px;">
+                  <option value="">Select Language</option>                                  
                   <option ng-repeat="lang in language" value="{{lang.code}}">{{lang.name}}</option>
                 </select>
             </div>
@@ -330,8 +330,9 @@
                   </div> <!-- end of right column in contact form -->
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addContact(newContact)">Add</button>
-                   <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                  <button ng-if="page==='edit' || page==='new'" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addContact(newContact)">Add</button>
+                   <button ng-if="page==='edit' || page==='new'" type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                   <button ng-if="page==='view'" type="button" class="btn btn-default" data-dismiss="modal" >Ok</button>
                 </div>
               </div>
             </div>
@@ -530,8 +531,9 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                   <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addAddress(newAddr)">Add</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                   <button ng-if="page==='edit' || page==='new'" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addAddress(newAddr)">Add</button>
+                  <button ng-if="page==='edit' || page==='new'" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button ng-if="page==='view'" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
                 </div>
               </div>
             </div>

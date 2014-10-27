@@ -26,7 +26,8 @@ myApp.controller('supplierCtrl', [ '$scope', '$http', '$routeParams','$location'
       if($scope.edit_flag)
 			{	
         if( $scope.addressValidation()){
-            growl.addErrorMessage('please enter required field to update address');
+            growl.addErrorMessage('please enter required and valid field to update address');
+            $scope.addressReset();
          }
           else{
             for(i=0;i<$scope.addresses.length;i++)
@@ -43,7 +44,8 @@ myApp.controller('supplierCtrl', [ '$scope', '$http', '$routeParams','$location'
       else
       {
         if( $scope.addressValidation()){
-           growl.addErrorMessage('please enter required field to create new address');
+           growl.addErrorMessage('please enter required and valid field to create new address');
+           $scope.addressReset();
          }
           else{
            growl.addSuccessMessage('new address added');
@@ -76,7 +78,8 @@ myApp.controller('supplierCtrl', [ '$scope', '$http', '$routeParams','$location'
 			if($scope.edit_flag)
 			{
         if( $scope.contactValidation()){
-            growl.addErrorMessage('please enter required field to update contact');
+            growl.addErrorMessage('please enter required and valid field to update contact');
+            $scope.contactReset();
          }
         else{
           for(i=0;i<$scope.contacts.length;i++)
@@ -94,7 +97,8 @@ myApp.controller('supplierCtrl', [ '$scope', '$http', '$routeParams','$location'
       else
       {
          if( $scope.contactValidation()){
-            growl.addErrorMessage('please enter required field to create new contact');
+            growl.addErrorMessage('please enter required and valid field to create new contact');
+            $scope.contactReset();
          }
         else{
           growl.addSuccessMessage('new contact created');
@@ -331,6 +335,31 @@ $scope.addressValidation = function() {
           });
 			}		
 		};
+		$scope.addressReset = function(){
+			$scope.newAddr.name1 = '';
+			$scope.newAddr.name2 = '';
+			$scope.newAddr.name3 = '';
+			$scope.newAddr.country = '';
+			$scope.newAddr.city = '';
+			$scope.newAddr.zipCode = '';
+			$scope.newAddr.pobox = '';
+			$scope.newAddr.poboxZipCode = '';
+			$scope.newAddr.phoneNo = '';
+			$scope.newAddr.faxNo='';
+			$scope.newAddr.email ='';
+			$scope.newAddr.corporateURL ='';
+			$scope.newAddr.numOfEmployees ='';
+		}
+		 $scope.contactReset = function(){
+		 	$scope.newContact.firstName = '';
+		 	$scope.newContact.lastName = '';
+		 	$scope.newContact.email = '';
+		 	$scope.newContact.description = '';
+		 	$scope.newContact.phone = '';
+		 	$scope.newContact.alternatePhone = '';
+		 	$scope.newContact.mobile = '';
+		 	$scope.newContact.url = '';
+		 }
 }]); 
 
 myApp.directive("ngFileSelect",function(){

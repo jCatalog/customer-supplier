@@ -23,7 +23,7 @@
             <label class="col-md-4 control-label">Tenant<span ng-show="customer.tenantRef === 'null'|| customer.tenantRef._id === 'null'" class="help-inline" style="color:red"> *</span></label>
             <div ng-show="page==='new'" class="col-md-6"> 
               <select class="form-control" ng-model="customer.tenantRef" style="width:200px;" ng-init="customer.tenantRef='null'">
-                <option value="null">choose one tenant</option>                                  
+                <option value="null">Select tenant</option>                                  
                 <option ng-repeat="tenant in tenantList" value="{{tenant._id}}">{{tenant.name}}</option>
               </select>
             </div>
@@ -38,8 +38,8 @@
             <span ng-if="customer.customerGroup === 'null' || customer.customerGroup._id === 'null'" class="help-inline" style="color:red">*</span></label>  
             <div class="col-md-6" ng-show="page=='new'">
               <select name="customerGroup" class="form-control" ng-model="customer.customerGroup" ng-init="customer.customerGroup ='null'" style="width:200px;">
-                <option ng-repeat="group in cus_gp_dtls" value="{{group._id}}">{{group.groupName}}</option>
-                <option value="null">choose one group</option>                                  
+                <option value="null">Select customer group</option>
+                <option ng-repeat="group in cus_gp_dtls" value="{{group._id}}">{{group.groupName}}</option>            
               </select>              
             </div>
 
@@ -115,8 +115,8 @@
           <div class="form-group">
             <label class="col-md-4 control-label">Language</label>  
             <div class="col-md-6">
-               <select class="form-control" ng-readonly="page=='view'" ng-model="customer.abstractBusinessPartner.language" style="width:300px;" ng-init="customer.abstractBusinessPartner.language='null'">
-                  <option value="null">Select language</option>                                  
+               <select class="form-control" ng-readonly="page=='view'" ng-model="customer.abstractBusinessPartner.language" style="width:300px;">
+                  <option value="">Select language</option>                                  
                   <option ng-repeat="lang in language" value="{{lang.code}}">{{lang.name}}</option>
                 </select>
             </div>
