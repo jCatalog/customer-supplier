@@ -176,7 +176,7 @@ exports.DeleteCustomer = function(request, reply) {
 /** get customer csv sheet */
 exports.GetCustomerExcel = function(request, reply) {
     var json1 = [];
-    var field1 = ['CustomerId','Name', 'Group', 'Profile']
+    var field1 = ['CustomerId','Name', 'Group', 'Profile', 'City', 'State', 'Country', 'Email']
     Customer
        .find({})
        .populate('tenantRef')
@@ -190,12 +190,40 @@ exports.GetCustomerExcel = function(request, reply) {
                var Name = array[index].customerName === null ? ' ':array[index].customerName;
                var Group = array[index].customerGroup === null ? ' ':array[index].customerGroup.groupName;
                var Profile = array[index].customerProfile === null ? ' ':array[index].customerProfile;
-             
+               var addresses = array[index].addresses === null ? '' : array[index].addresses;
+               if(addresses.length !== 0){
+                var array1 = array[index].addresses;
+                 var city = [];
+                 var state = [];
+                 var country = [];
+                 var email = [];
+                 array1.forEach(function(element, index, array1){
+                    city.push(array1[index].city);
+                    state.push(array1[index].state);
+                    country.push(array1[index].country);
+                    email.push(array1[index].email);
+                 });
+                 city = city.toString();
+                 state = state.toString();
+                 country = country.toString();
+                 email = email.toString();
+               }
+               else {
+                var city = '';
+                var state = '';
+                var country = '';
+                var email = '';
+              }
+               
               json1.push({
                 "CustomerId": CustomerId,
                 "Name": Name,
                 "Group": Group,
-                "Profile": Profile
+                "Profile": Profile,
+                "City": city,
+                "State": state,
+                "Country": country,
+                "Email": email
               });
              });
             json2csv({
