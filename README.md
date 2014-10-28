@@ -15,6 +15,14 @@ npm install
 
 [Mongodb] (http://docs.mongodb.org/manual/)
 
+###### *import database*
+
+import sample data using the given command
+
+mongorestore --host localhost --port 27017 --db <database_name> <path of sample database file>
+
+Note: You will find sample database in ./db/customer-supplier.
+
 ###### *Run Server*
 
 You need to run the following command in root directory of an app in command prompt.
