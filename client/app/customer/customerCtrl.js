@@ -279,7 +279,6 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
 
 		$scope.SubmitCustomer = function(customer_dtls,contacts,address)
 		{
-			
 			if($scope.customer_create.$valid && $scope.customer.customerGroup != 'null' && $scope.customer.tenantRef != 'null')
 			{	
 				if($scope.imageSrc != "img/image_upload.jpg")
@@ -303,6 +302,7 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
 	    				customer_dtls.addresses.push(address[i]);
 					}
 				}
+				getObject(customer_dtls);
 				if($scope.accessor=='tenant')
 				customer_dtls.tenantRef = $routeParams.id;
 				customer.save({url:'customers'}, customer_dtls).$promise.then(function(data){
@@ -393,6 +393,29 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
 	 	$scope.newContact.mobile = '';
 	 	$scope.newContact.url = '';
 	 }
+	 var getObject=function (theObject) {
+    var result = null;
+    if(theObject instanceof Array) {
+        for(var i = 0; i < theObject.length; i++) {
+            result = getObject(theObject[i]);
+        }
+    }
+    else
+    {
+        for(var prop in theObject) {
+            console.log(prop + ': ' + theObject[prop]);
+          if(theObject[prop]==""){
+          	delete theObject[prop];
+            console.log('deleted',theObject.prop)
+          }
+            
+            
+            if(theObject[prop] instanceof Object || theObject[prop] instanceof Array)
+                result = getObject(theObject[prop]);
+        }
+    }
+        
+};
     
 }]); 
 myApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {

@@ -286,6 +286,7 @@ $scope.addressValidation = function() {
 }
 		$scope.submit = function(supplier_dtls,contact_dtls,address_dtls)
 		{
+
 			if($scope.supplier_form.$valid && $scope.supplier.supplierGroup != 'null' && $scope.supplier.tenantRef != 'null')
 			{	
 				if(contact_dtls)
@@ -308,6 +309,7 @@ $scope.addressValidation = function() {
 						supplier_dtls.abstractBusinessPartner = {};					
 					supplier_dtls.abstractBusinessPartner.logo = $scope.imageSrc;
 				}
+				getObject(supplier_dtls);
 				if($scope.accessor=='tenant')
 				{
 					supplier_dtls.tenantRef = $routeParams.id;
@@ -360,6 +362,26 @@ $scope.addressValidation = function() {
 		 	$scope.newContact.mobile = '';
 		 	$scope.newContact.url = '';
 		 }
+		 var getObject=function (theObject) {
+		    var result = null;
+		    if(theObject instanceof Array) {
+		        for(var i = 0; i < theObject.length; i++) {
+		            result = getObject(theObject[i]);
+		        }
+		    }
+		    else
+		    {
+		        for(var prop in theObject) {
+		          if(theObject[prop]==""){
+		          	delete theObject[prop];
+		            //console.log('deleted',theObject.prop)
+		          }
+		            if(theObject[prop] instanceof Object || theObject[prop] instanceof Array)
+		                result = getObject(theObject[prop]);
+		        }
+		    }
+		        
+		};
 }]); 
 
 myApp.directive("ngFileSelect",function(){
