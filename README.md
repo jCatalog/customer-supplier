@@ -19,7 +19,7 @@ npm install
 
 import sample data using the given command
 
-mongorestore --host localhost --port 27017 --db <database_name> <path of sample database file>
+mongorestore --host localhost --port 27017 --db [database_name] [path of sample database file]
 
 Note: You will find sample database in ./db/customer-supplier.
 
