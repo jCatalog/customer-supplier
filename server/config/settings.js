@@ -19,7 +19,7 @@ module.exports = {
         dialect: "mongodb",
         host: 'localhost' ,
         port: 3000 ,
-        databaseName : "event-exchange",
+        databaseName : "customer-supplier",
         userName : "event",
         password : "event"
 
