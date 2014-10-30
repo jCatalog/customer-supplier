@@ -393,7 +393,7 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
 	 	$scope.newContact.mobile = '';
 	 	$scope.newContact.url = '';
 	 }
-	 var getObject=function (theObject) {
+	var getObject=function (theObject) {
     var result = null;
     if(theObject instanceof Array) {
         for(var i = 0; i < theObject.length; i++) {
@@ -403,13 +403,10 @@ myApp.controller('customerCtrl', [ '$scope', '$http', '$routeParams','$location'
     else
     {
         for(var prop in theObject) {
-            console.log(prop + ': ' + theObject[prop]);
           if(theObject[prop]==""){
           	delete theObject[prop];
-            console.log('deleted',theObject.prop)
+            //console.log('deleted',theObject.prop)
           }
-            
-            
             if(theObject[prop] instanceof Object || theObject[prop] instanceof Array)
                 result = getObject(theObject[prop]);
         }

@@ -2,6 +2,7 @@ var Boom = require('boom'), // HTTP Errors
     json2csv = require('json2csv'),
     fs = require('fs'),
     Supplier = require('../models/supplier').Supplier, // Mongoose ODM
+    countries = require('country-list')(),
     Setting = require('../config/settings').filePath;
 
 /** @module Controller for Supplier */
@@ -171,9 +172,10 @@ exports.GetSupplierExcel = function(request, reply) {
                  var country = [];
                  var email = [];
                  array1.forEach(function(element, index, array1){
+                    var countryName = countries.getName(array1[index].country);
                     city.push(array1[index].city);
                     state.push(array1[index].state);
-                    country.push(array1[index].country);
+                    country.push(countryName);
                     email.push(array1[index].email);
                  });
                  city = city.toString();

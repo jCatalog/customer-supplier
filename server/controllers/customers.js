@@ -198,9 +198,10 @@ exports.GetCustomerExcel = function(request, reply) {
                  var country = [];
                  var email = [];
                  array1.forEach(function(element, index, array1){
+                   var countryName = countries.getName(array1[index].country);
                     city.push(array1[index].city);
                     state.push(array1[index].state);
-                    country.push(array1[index].country);
+                    country.push(countryName);
                     email.push(array1[index].email);
                  });
                  city = city.toString();
