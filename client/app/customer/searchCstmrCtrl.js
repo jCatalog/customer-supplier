@@ -104,6 +104,7 @@ myApp.controller('searchCstmrCtrl', [ '$scope', '$http', '$routeParams','$locati
         $scope.data = data;
          $scope.currentPage = 0;
          $scope.groupToPages();
+         console.log($scope.data);
          
 			}).catch(function(error){
           console.log("search");

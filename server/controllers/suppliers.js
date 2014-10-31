@@ -216,8 +216,9 @@ exports.GetSupplierSearch = function(request, reply) {
        array.forEach(function(element, index, array){
              var key = array[index].key;
              var value = array[index].value;
-             value = new RegExp(value, "i");
-             //console.log(value);
+             if(key !== 'supplierId'){
+              value = new RegExp(value, "i");
+             }
              switch(key){
                case "country":
                  key = "addresses.country";
