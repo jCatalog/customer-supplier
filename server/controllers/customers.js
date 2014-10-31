@@ -263,7 +263,7 @@ exports.GetCustomerSearch = function(request, reply) {
        })
     
        Customer
-       .find(obj,{customerName:1, customerGroup:1})
+       .find(obj,{customerId:1, customerName:1, customerGroup:1})
        .populate('customerGroup')
        .exec(function(err, docs) {
          if (err) throw err;

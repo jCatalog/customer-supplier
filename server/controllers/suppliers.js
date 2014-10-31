@@ -234,7 +234,7 @@ exports.GetSupplierSearch = function(request, reply) {
        })
 
        Supplier
-       .find(obj,{supplierName:1, supplierGroup:1})
+       .find(obj,{supplierId:1, supplierName:1, supplierGroup:1})
        .populate('supplierGroup')
        .exec(function(err, docs) {
          if (err) throw err;

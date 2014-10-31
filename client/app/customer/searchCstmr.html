@@ -91,6 +91,7 @@
       </thead>
       <tbody>
           <tr class="hoverptr" ng-repeat="customer in pagedItems[currentPage]">
+            {{customer.customerId}}
             <td ng-click="customer_view(customer._id)">{{$index+1}}
             </td>
             <td ng-click="customer_view(customer._id)">{{customer.customerId}}</td>
