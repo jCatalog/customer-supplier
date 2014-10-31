@@ -112,7 +112,7 @@
       <tbody>
           <tr class="hoverptr" ng-repeat="supplier in pagedItems[currentPage]">
             <td ng-click="supplier_view(supplier._id)">{{$index+1}}</td>
-            <td ng-click="supplier_view(supplier._id)">{{supplier._id}}</td>
+            <td ng-click="supplier_view(supplier._id)">{{supplier.supplierId}}</td>
               <td ng-click="supplier_view(supplier._id)">{{supplier.supplierName}}</td>
             <td ng-click="supplier_view(supplier._id)">{{supplier.supplierGroup.groupName}}</td>
             <td>

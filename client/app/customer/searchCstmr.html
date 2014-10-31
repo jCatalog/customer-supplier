@@ -93,7 +93,7 @@
           <tr class="hoverptr" ng-repeat="customer in pagedItems[currentPage]">
             <td ng-click="customer_view(customer._id)">{{$index+1}}
             </td>
-            <td ng-click="customer_view(customer._id)">{{customer._id}}</td>
+            <td ng-click="customer_view(customer._id)">{{customer.customerId}}</td>
             <td ng-click="customer_view(customer._id)">{{customer.customerName}}</td>
             <td ng-click="customer_view(customer._id)">{{customer.customerGroup.groupName}}</td>
             <td>
