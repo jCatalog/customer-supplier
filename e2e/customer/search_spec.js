@@ -37,8 +37,8 @@ describe('Customers search page', function() {
     });
 
     it('able to get search results using customer name', function() {
-      var country = element(by.model('srch.customer.customerName'));
-      country.sendKeys('sarvani');
+      var cname = element(by.model('srch.customer.customerName'));
+      cname.sendKeys('sarvani');
       element.all(by.css('.btn-primary')).then(function(items) {
         items[1].click();
       });
@@ -50,8 +50,8 @@ describe('Customers search page', function() {
     });
 
     it('able to get search results using customer city name', function() {
-      var country = element(by.model('srch.customer.city'));
-      country.sendKeys('mumbai');
+      var city = element(by.model('srch.customer.city'));
+      city.sendKeys('mumbai');
       element.all(by.css('.btn-primary')).then(function(items) {
         items[1].click();
       });
@@ -63,8 +63,8 @@ describe('Customers search page', function() {
     });
 
     it('able to get search results using customer state name', function() {
-      var country = element(by.model('srch.customer.state'));
-      country.sendKeys('maharastra');
+      var state = element(by.model('srch.customer.state'));
+      state.sendKeys('maharastra');
       element.all(by.css('.btn-primary')).then(function(items) {
         items[1].click();
       });
@@ -76,8 +76,8 @@ describe('Customers search page', function() {
     });
 
     it('able to get search results using customer id', function() {
-      var country = element(by.model('srch.customer.customerId'));
-      country.sendKeys('9');
+      var cid = element(by.model('srch.customer.customerId'));
+      cid.sendKeys('9');
       element.all(by.css('.btn-primary')).then(function(items) {
         items[1].click();
       });
@@ -85,6 +85,38 @@ describe('Customers search page', function() {
 
       var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
       expect(customers.count()).toBe(1);
+      ptor.sleep(500);
+    });
+
+    it('able to get search results using two valid combination of inputs', function() {
+      var cid = element(by.model('srch.customer.customerId'));
+      cid.sendKeys('9');
+      var city = element(by.model('srch.customer.city'));
+      city.sendKeys('new delhi');
+      element.all(by.css('.btn-primary')).then(function(items) {
+        items[1].click();
+      });
+      ptor.sleep(1000);
+
+      var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
+      expect(customers.count()).toBe(1);
+      ptor.sleep(500);
+    });
+
+    it('able to show 0 search results using two valid combination of inputs and one invalid input', function() {
+      var cid = element(by.model('srch.customer.customerId'));
+      cid.sendKeys('9');
+      var city = element(by.model('srch.customer.city'));
+      city.sendKeys('new delhi');
+      var cname = element(by.model('srch.customer.customerName'));
+      cname.sendKeys('sarvani');
+      element.all(by.css('.btn-primary')).then(function(items) {
+        items[1].click();
+      });
+      ptor.sleep(1000);
+
+      var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
+      expect(customers.count()).toBe(0);
       ptor.sleep(500);
     });
 

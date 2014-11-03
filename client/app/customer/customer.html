@@ -153,7 +153,7 @@
             <div class="form-group">
               <label class="col-md-4 control-label">Is Customer Group Master</label>  
               <div class="col-md-6" ng-show="page=='new' || page=='edit'">
-                <input type="radio" name="isCustomerGrpMaster" ng-model="customer.isCustomerGrpMaster" ng-value='true' ng-init="customer.isCustomerGrpMaster=true">True &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="isCustomerGrpMaster" ng-model="customer.isCustomerGrpMaster" ng-value='false' ng-init="customer.isCustomerGrpMaster=true">True &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" ng-model="customer.isCustomerGrpMaster" name="isCustomerGrpMaster" ng-value='false'>False
               </div>
               <div class="col-md-6" ng-if="page==='view'">
@@ -186,7 +186,7 @@
               <label class="col-md-4 control-label">Debit Limit</label>  
               <div class="col-md-6">
               <input ng-readonly="page=='view'" name="debitLimit" type="text" placeholder="" class="form-control input-md" ng-model="customer.debitLimit" ng-pattern="/^[0-9]*$/" style="width:150px">
-              <span ng-show="customer_create.debitLimit.$error.pattern" class="help-inline" style="color:red">*invalid debi limit</span>
+              <span ng-show="customer_create.debitLimit.$error.pattern" class="help-inline" style="color:red">*invalid debit limit</span>
               </div>
             </div>
             <div class="form-group">
@@ -224,7 +224,7 @@
                <div class="input-group" style="width: 100px;">
                 <input ng-readonly="page=='view'" name="invToleranceAbs" type="text" placeholder="" class="form-control input-md" ng-model="customer.invToleranceAbs" ng-pattern="/^(100(?:\.00)?|0(?:\.\d\d)?|\d?\d(?:\.\d\d)?)$/" style="width:70px;"><span class="input-group-addon">%</span>
                 </div>
-                <span ng-show="customer_create.invToleranceAbs.$error.pattern" class="help-inline" style="color:red">*Invalid inv. tolerance absolute</span>
+                <span ng-show="customer_create.invToleranceAbs.$error.pattern" class="help-inline" style="color:red">*invalid inv. tolerance absolute</span>
               </div>
             </div>
             <h2>Descriptions</h2>
