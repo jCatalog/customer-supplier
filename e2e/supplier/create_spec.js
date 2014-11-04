@@ -1,12 +1,12 @@
 'use strict';
 
-describe('Customers create page', function() {
+describe('suppliers create page', function() {
   var ptor;
   var text_helper;
   var dropdown_helper;
   var random_number;
   var email_helper;
-  var new_customer_helper;
+  var new_supplier_helper;
   var contact_helper;
   var address_helper;
   beforeEach(function() {
@@ -15,13 +15,13 @@ describe('Customers create page', function() {
     text_helper = require('../helpers/random_text.js');
     dropdown_helper = require('../helpers/selectDropdown.js');
     email_helper = require('../helpers/random_email.js');
-    new_customer_helper = require('../helpers/customer_form.js');
+    new_supplier_helper = require('../helpers/supplier_form.js');
     contact_helper = require('../helpers/contact_form.js');
     address_helper = require('../helpers/address_form.js');
     browser.get('http://localhost:3035/#/');
     ptor.sleep(500);
     element.all(by.css('.navbar-nav li')).then(function(items) {
-      items[0].click();
+      items[1].click();
       ptor.sleep(500);
     });
   });
@@ -36,16 +36,16 @@ describe('Customers create page', function() {
         items[0].click();
       });
       ptor.sleep(500);
-	  	expect(browser.getCurrentUrl()).toContain('/new_customer');
+	  	expect(browser.getCurrentUrl()).toContain('/new_supplier');
 	  	ptor.sleep(500);
     });
 
-    it('create the customer if sufficient details are provided', function() {
-    	var tenant = element(by.model('customer.tenantRef'));
+    it('create the supplier if sufficient details are provided', function() {
+    	var tenant = element(by.model('supplier.tenantRef'));
     	tenant.sendKeys(dropdown_helper.selectDropdownbyNum(4));
-    	var tenant_group = element(by.model('customer.customerGroup'));
-    	tenant_group.sendKeys(dropdown_helper.selectDropdownbyNum(10));
-    	var name = element(by.model('customer.customerName'));
+    	var tenant_group = element(by.model('supplier.supplierGroup'));
+    	tenant_group.sendKeys(dropdown_helper.selectDropdownbyNum(7));
+    	var name = element(by.model('supplier.supplierName'));
     	name.sendKeys(text_helper.getRandomString(6));
 
     	element.all(by.css('.btn-block')).then(function(items) {
@@ -53,14 +53,14 @@ describe('Customers create page', function() {
       });
 
       element.all(by.css('.growl')).then(function(items) {
-        expect(items[0].getText()).toContain('customer created Succesfully');
+        expect(items[0].getText()).toContain('supplier created Succesfully');
       });
       
     });
 
     it('show the error messages when wrong input is entered', function() {
       
-      new_customer_helper.customerForm(ptor, text_helper, dropdown_helper, 'new');
+      new_supplier_helper.supplierForm(ptor, text_helper, dropdown_helper, 'new');
       ptor.sleep(500);
       contact_helper.contactForm(ptor, text_helper, dropdown_helper, email_helper, 'new');
       ptor.sleep(500);
@@ -71,7 +71,7 @@ describe('Customers create page', function() {
       });
 
       element.all(by.css('.growl')).then(function(items) {
-        expect(items[0].getText()).toContain('customer created Succesfully');
+        expect(items[0].getText()).toContain('supplier created Succesfully');
       });
 
     });
@@ -88,11 +88,11 @@ describe('Customers create page', function() {
     });
 
     it('reset data if reset button is clicked', function() {
-      var tenant = element(by.model('customer.tenantRef'));
+      var tenant = element(by.model('supplier.tenantRef'));
       tenant.sendKeys(dropdown_helper.selectDropdownbyNum(4));
-      var tenant_group = element(by.model('customer.customerGroup'));
+      var tenant_group = element(by.model('supplier.supplierGroup'));
       tenant_group.sendKeys(dropdown_helper.selectDropdownbyNum(10));
-      var name = element(by.model('customer.customerName'));
+      var name = element(by.model('supplier.supplierName'));
       name.sendKeys(text_helper.getRandomString(6));
 
       element.all(by.css('.btn-block')).then(function(items) {
@@ -100,7 +100,7 @@ describe('Customers create page', function() {
       });
 
       element.all(by.css('.growl')).then(function(items) {
-        expect(items[0].getText()).toContain('customer data reset Succesfully');
+        expect(items[0].getText()).toContain('supplier data reset Succesfully');
       });
     });
 
@@ -109,7 +109,7 @@ describe('Customers create page', function() {
       element.all(by.css('.btn-block')).then(function(items) {
         items[3].click();
       });
-      expect(browser.getCurrentUrl()).toContain('/customers');
+      expect(browser.getCurrentUrl()).toContain('/#/suppliers');
       ptor.sleep(500);
     });
     

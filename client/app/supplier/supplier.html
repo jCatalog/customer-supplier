@@ -456,7 +456,7 @@
                           <label class="col-md-4 control-label">PO Box</label>  
                           <div class="col-md-8">
                             <input ng-model="newAddr.pobox" name="pobox" type="text" class="form-control input-md" maxlength="20" ng-readonly="page==='view'" style="width:200px;"  ng-pattern="/^[a-zA-Z0-9]+$/">
-                            <span ng-show="supplier_form.pobox.$error.pattern" class="help-inline" style="color:red">*invalid po box</span>
+                            <span ng-show="supplier_form.pobox.$error.pattern" class="help-inline" style="color:red">*Invalid pobox</span>
                           </div>
                         </div>
 
@@ -464,7 +464,7 @@
                           <label class="col-md-4 control-label">PO Box Zip Code</label>  
                           <div class="col-md-8">
                             <input ng-model="newAddr.poboxZipCode" name="poboxZipCode" type="text" class="form-control input-md" ng-maxlength="20" ng-readonly="page==='view'" style="width:200px;"  ng-pattern="/^[a-zA-Z0-9]+$/">
-                            <span ng-show="supplier_form.poboxZipCode.$error.pattern" class="help-inline" style="color:red">*invalid po box zip code</span>
+                            <span ng-show="supplier_form.poboxZipCode.$error.pattern" class="help-inline" style="color:red">*Invalid pobox zip code</span>
                           </div>
                         </div>
                       </div>
@@ -502,7 +502,7 @@
                           <label class="col-md-4 control-label">Corporate URL</label>  
                           <div class="col-md-8">
                             <input ng-model="newAddr.corporateURL" name="corporateurl" type="text" class="form-control input-md" ng-readonly="page==='view'" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
-                            <span ng-show="supplier_form.corporateurl.$error.pattern" class="help-inline" style="color:red">*Invalid corporate url</span>
+                            <span ng-show="supplier_form.corporateurl.$error.pattern" class="help-inline" style="color:red">*Invalid corporate URL</span>
                           </div>
                         </div>
 

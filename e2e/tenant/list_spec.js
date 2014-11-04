@@ -28,7 +28,7 @@ describe('Tenants Section', function() {
   describe('should get', function() {
     beforeEach(function() {
       element.all(by.tagName('td')).then(function(items) {
-        items[1].click();
+        items[13].click();
         ptor.sleep(500);
       });
     });
@@ -64,6 +64,33 @@ describe('Tenants Section', function() {
 
         element.all(by.tagName('h3')).then(function(items) {
           expect(items[0].getText()).toBe('Customer Details');
+        });
+
+      });
+
+    });
+
+    describe('supplier', function() {
+      beforeEach(function() {
+        element.all(by.css('.nav-tabs li')).then(function(items) {
+          items[2].click();
+          ptor.sleep(500);
+        });
+      });
+
+      it('list', function() {
+        element.all(by.tagName('h1')).then(function(items) {
+          expect(items[1].getText()).toBe('Suppliers List');
+        });
+      });
+
+      it('details', function() {
+        var customers = element.all(by.repeater('sd in supplierData'));
+        customers.get(4).click();
+        ptor.sleep(500);
+
+        element.all(by.tagName('h3')).then(function(items) {
+          expect(items[0].getText()).toBe('Supplier Details');
         });
 
       });

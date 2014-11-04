@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Customers search page', function() {
+describe('Suppliers search page', function() {
   var ptor;
   beforeEach(function() {
     browser.ignoreSynchronization = true;
@@ -9,7 +9,7 @@ describe('Customers search page', function() {
     browser.get('http://localhost:3035/#/');
     ptor.sleep(500);
     element.all(by.css('.navbar-nav li')).then(function(items) {
-      items[0].click();
+      items[1].click();
       ptor.sleep(500);
     });
   });
@@ -18,107 +18,108 @@ describe('Customers search page', function() {
 
   })
 
+
   it('able to get search results using country name', function() {
-    var country = element(by.model('srch.customer.country'));
+    var country = element(by.model('srch.supplier.country'));
     country.sendKeys('india');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(4);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(2);
     ptor.sleep(500);
     country.clear();
   });
 
-  it('able to get search results using customer name', function() {
-    var cname = element(by.model('srch.customer.customerName'));
+  it('able to get search results using supplier name', function() {
+    var cname = element(by.model('srch.supplier.supplierName'));
     cname.sendKeys('sarvani');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(1);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(1);
     ptor.sleep(500);
     cname.clear();
   });
 
-  it('able to get search results using customer city name', function() {
-    var city = element(by.model('srch.customer.city'));
-    city.sendKeys('mumbai');
+  it('able to get search results using supplier city name', function() {
+    var city = element(by.model('srch.supplier.city'));
+    city.sendKeys('Hyderabad');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(1);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(1);
     ptor.sleep(500);
     city.clear();
   });
 
-  it('able to get search results using customer state name', function() {
-    var state = element(by.model('srch.customer.state'));
-    state.sendKeys('maharastra');
+  it('able to get search results using supplier state name', function() {
+    var state = element(by.model('srch.supplier.state'));
+    state.sendKeys('Andhra Pradesh');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(0);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(1);
     ptor.sleep(500);
     state.clear();
   });
 
-  it('able to get search results using customer id', function() {
-    var cid = element(by.model('srch.customer.customerId'));
+  it('able to get search results using supplier id', function() {
+    var cid = element(by.model('srch.supplier.supplierId'));
     cid.sendKeys('9');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(1);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(1);
     ptor.sleep(500);
     cid.clear();
   });
 
   it('able to get search results using two valid combination of inputs', function() {
-    var cid = element(by.model('srch.customer.customerId'));
+    var cid = element(by.model('srch.supplier.supplierId'));
     cid.sendKeys('9');
-    var city = element(by.model('srch.customer.city'));
-    city.sendKeys('new delhi');
+    var city = element(by.model('srch.supplier.city'));
+    city.sendKeys('delhi');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(1);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(1);
     ptor.sleep(500);
     cid.clear();
     city.clear();
   });
 
   it('able to show 0 search results using two valid combination of inputs and one invalid input', function() {
-    var cid = element(by.model('srch.customer.customerId'));
+    var cid = element(by.model('srch.supplier.supplierId'));
     cid.sendKeys('9');
-    var city = element(by.model('srch.customer.city'));
-    city.sendKeys('new delhi');
-    var cname = element(by.model('srch.customer.customerName'));
+    var city = element(by.model('srch.supplier.city'));
+    city.sendKeys('delhi');
+    var cname = element(by.model('srch.supplier.supplierName'));
     cname.sendKeys('sarvani');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
 
-    var customers = element.all(by.repeater('customer in pagedItems[currentPage]'));
-    expect(customers.count()).toBe(0);
+    var suppliers = element.all(by.repeater('supplier in pagedItems[currentPage]'));
+    expect(suppliers.count()).toBe(0);
     ptor.sleep(500);
     cid.clear();
     city.clear();
@@ -135,7 +136,7 @@ describe('Customers search page', function() {
     });
     element(by.css('[ng-click="cancel()"]')).click();
     ptor.sleep(500);
-    expect(browser.getCurrentUrl()).toContain('/customers');
+    expect(browser.getCurrentUrl()).toContain('/#/suppliers');
     ptor.sleep(500);
   });
 
@@ -144,7 +145,6 @@ describe('Customers search page', function() {
       items[0].click();
     });
     ptor.sleep(500);
-
   });
-  
+
 });

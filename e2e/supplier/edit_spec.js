@@ -1,12 +1,12 @@
 'use strict';
 
-describe('Customers edit page', function() {
+describe('Suppliers edit page', function() {
   var ptor;
   var text_helper;
   var dropdown_helper;
   var random_number;
   var email_helper;
-  var edit_customer_helper;
+  var edit_supplier_helper;
   var contact_helper;
   var address_helper;
   beforeEach(function() {
@@ -15,13 +15,13 @@ describe('Customers edit page', function() {
     text_helper = require('../helpers/random_text.js');
     dropdown_helper = require('../helpers/selectDropdown.js');
     email_helper = require('../helpers/random_email.js');
-    edit_customer_helper = require('../helpers/customer_form.js');
+    edit_supplier_helper = require('../helpers/supplier_form.js');
     contact_helper = require('../helpers/contact_form.js');
     address_helper = require('../helpers/address_form.js');
     browser.get('http://localhost:3035/#/');
     ptor.sleep(500);
     element.all(by.css('.navbar-nav li')).then(function(items) {
-      items[0].click();
+      items[1].click();
       ptor.sleep(500);
     });
   });
@@ -32,7 +32,7 @@ describe('Customers edit page', function() {
 
   it('should show the error messages when wrong input is entered while editing', function() {
 
-    var country = element(by.model('srch.customer.country'));
+    var country = element(by.model('srch.supplier.country'));
     country.sendKeys('ge');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
@@ -44,10 +44,10 @@ describe('Customers edit page', function() {
     });
     ptor.sleep(500);
     element.all(by.css('.btn-block')).then(function(items) {
-      items[8].click();
+      items[7].click();
     });
     
-    edit_customer_helper.customerForm(ptor, text_helper, dropdown_helper, 'edit');
+    edit_supplier_helper.supplierForm(ptor, text_helper, dropdown_helper, 'edit');
     ptor.sleep(500);
     contact_helper.contactForm(ptor, text_helper, dropdown_helper, email_helper, 'edit');
     ptor.sleep(500);
@@ -58,14 +58,15 @@ describe('Customers edit page', function() {
     });
 
     element.all(by.css('.growl')).then(function(items) {
-      expect(items[0].getText()).toContain('customer updated Succesfully');
+      expect(items[0].getText()).toContain('supplier updated Succesfully');
     });
 
   });
 
   describe('should', function() {
     beforeEach(function() {
-      var country = element(by.model('srch.customer.country'));
+      var country = element(by.model('srch.supplier.country'));
+      country.clear();
       country.sendKeys('india');
       element.all(by.css('.btn-primary')).then(function(items) {
         items[1].click();
@@ -78,18 +79,13 @@ describe('Customers edit page', function() {
 
     });
 
-    afterEach(function() {
-      country.clear();
-    });
-
-
     it('show popup when cancel button is clicked without entering data', function() {
 
       ptor.sleep(500);
       element.all(by.css('.btn-block')).then(function(items) {
-        items[9].click();
+        items[8].click();
       });
-      expect(browser.getCurrentUrl()).toContain('#/customers');
+      expect(browser.getCurrentUrl()).toContain('#/suppliers');
       ptor.sleep(500);
     });
 
@@ -97,14 +93,13 @@ describe('Customers edit page', function() {
       beforeEach(function() {
         ptor.sleep(500);
         element.all(by.css('.btn-block')).then(function(items) {
-          items[8].click();
+          items[7].click();
         });
         ptor.sleep(500);
       });
 
       it('in profile', function() {
-
-        var ename = element(by.model('customer.abstractBusinessPartner.extName'));
+        var ename = element(by.model('supplier.abstractBusinessPartner.extName'));
         ename.sendKeys(text_helper.getRandomString(text_helper.getRandomString(2))+'^');
 
         ptor.sleep(500);
