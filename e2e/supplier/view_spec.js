@@ -20,10 +20,6 @@ describe('Suppliers view page', function() {
     });
   });
 
-  afterEach(function() {
-
-  })
-
   describe('should', function() {
     beforeEach(function() {
       var country = element(by.model('srch.supplier.country'));

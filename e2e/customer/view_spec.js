@@ -1,6 +1,6 @@
 'use strict';
 
-ddescribe('Customers view page', function() {
+describe('Customers view page', function() {
   var ptor;
   var text_helper;
   var dropdown_helper;

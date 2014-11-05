@@ -16,19 +16,20 @@ describe('Suppliers page', function() {
     ptor.sleep(500);
   });
 
-  afterEach(function() {
-
-  })
-
   it('should able to delete the supplier when remove button is clicked', function() {
-
+    var country = element(by.model('srch.supplier.country'));
+    if (country != null){
+      country.clear();
+    }
     var cname = element(by.model('srch.supplier.supplierName'));
+    if (cname != null){
+      cname.clear();
+    }
     cname.sendKeys('cust');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
-
     element.all(by.css('.btn-default')).then(function(items) {
       items[1].click();
     });
@@ -37,8 +38,8 @@ describe('Suppliers page', function() {
     element.all(by.css('.growl')).then(function(items) {
       expect(items[0].getText()).toContain('Supplier removed Succesfully');
     });
-    cname.clear();
-
+    ptor.sleep(100);
+    element(by.css('[ng-click="deleteMessage(message)"]')).click();
   });
 
   describe('should remove', function() {
@@ -50,11 +51,9 @@ describe('Suppliers page', function() {
         items[1].click();
       });
       ptor.sleep(1000);
-
       element.all(by.css('[ng-click="supplier_view(supplier._id)"]')).then(function(items) {
         items[2].click();
       });
-
       ptor.sleep(500);
       element.all(by.css('.btn-block')).then(function(items) {
         items[7].click();
@@ -63,13 +62,14 @@ describe('Suppliers page', function() {
     });
 
     it('the contact when contact delete button is clicked', function() {
-
       element.all(by.css('[ng-click="delete_contact($index)"]')).then(function(items) {
         items[0].click();
       });
       element.all(by.css('.growl')).then(function(items) {
         expect(items[0].getText()).toContain('contact deleted Succesfully');
       });
+      ptor.sleep(100);
+      element(by.css('[ng-click="deleteMessage(message)"]')).click();
       ptor.sleep(500);
     });
 
@@ -81,6 +81,8 @@ describe('Suppliers page', function() {
       element.all(by.css('.growl')).then(function(items) {
         expect(items[0].getText()).toContain('address deleted Succesfully');
       });
+      ptor.sleep(100);
+      element(by.css('[ng-click="deleteMessage(message)"]')).click();
       ptor.sleep(500);
     });
     

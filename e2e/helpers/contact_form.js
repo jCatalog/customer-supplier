@@ -129,10 +129,14 @@ exports.contactForm = function (ptor, text_helper, dropdown_helper, email_helper
     element.all(by.css('.growl')).then(function(items) {
       expect(items[0].getText()).toContain('new contact created');
     });
+    ptor.sleep(100);
+    element(by.css('[ng-click="deleteMessage(message)"]')).click();
   }
   if (option == 'edit'){
     element.all(by.css('.growl')).then(function(items) {
       expect(items[0].getText()).toContain('contact updated');
     });
+    ptor.sleep(100);
+    element(by.css('[ng-click="deleteMessage(message)"]')).click();
   }
 };

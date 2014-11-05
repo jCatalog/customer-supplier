@@ -27,26 +27,26 @@ describe('Suppliers edit page', function() {
   });
 
   afterEach(function() {
-
-  })
+    ptor.sleep(500);
+  });
 
   it('should show the error messages when wrong input is entered while editing', function() {
-
     var country = element(by.model('srch.supplier.country'));
+    if(country != null){
+      country.clear();
+    }
     country.sendKeys('ge');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
-
     element.all(by.tagName('tr')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(500);
     element.all(by.css('.btn-block')).then(function(items) {
       items[7].click();
-    });
-    
+    });   
     edit_supplier_helper.supplierForm(ptor, text_helper, dropdown_helper, 'edit');
     ptor.sleep(500);
     contact_helper.contactForm(ptor, text_helper, dropdown_helper, email_helper, 'edit');
@@ -56,11 +56,11 @@ describe('Suppliers edit page', function() {
     element.all(by.css('.btn-block')).then(function(items) {
       items[4].click();
     });
-
     element.all(by.css('.growl')).then(function(items) {
       expect(items[0].getText()).toContain('supplier updated Succesfully');
     });
-
+    ptor.sleep(100);
+    element(by.css('[ng-click="deleteMessage(message)"]')).click();
   });
 
   describe('should', function() {
@@ -72,15 +72,12 @@ describe('Suppliers edit page', function() {
         items[1].click();
       });
       ptor.sleep(1000);
-
       element.all(by.tagName('tr')).then(function(items) {
         items[1].click();
       });
-
     });
 
     it('show popup when cancel button is clicked without entering data', function() {
-
       ptor.sleep(500);
       element.all(by.css('.btn-block')).then(function(items) {
         items[8].click();
@@ -100,17 +97,21 @@ describe('Suppliers edit page', function() {
 
       it('in profile', function() {
         var ename = element(by.model('supplier.abstractBusinessPartner.extName'));
-        ename.sendKeys(text_helper.getRandomString(text_helper.getRandomString(2))+'^');
-
+        ename.sendKeys('gbjh^');
         ptor.sleep(500);
         element.all(by.css('.btn-block')).then(function(items) {
           items[4].click();
         });
-
         element.all(by.css('.modal-body p')).then(function(items) {
           expect(items[0].getText()).toContain('Please enter valid datas');
         });
+        // element.all(by.buttonText('Ok')).then(function(items) {
+        //   items[0].click();
+        // });
+        var b = element(by.buttonText('Ok'));
+        b.sendKeys(protractor.Key.ESCAPE);
       });
+
 
       it('in contact', function() {
         element.all(by.css('[ng-click="edit_contact(contact)"]')).then(function(contacts) {
@@ -119,12 +120,12 @@ describe('Suppliers edit page', function() {
         var fname = element(by.model('newContact.firstName'));
         fname.sendKeys('@hjksd');
         ptor.sleep(500);
-
         element(by.css('[ng-click="addContact(newContact)"]')).click();
         element.all(by.css('.growl')).then(function(items) {
           expect(items[0].getText()).toContain('please enter required and valid field to update contact');
         });
-        
+        ptor.sleep(100);
+        element(by.css('[ng-click="deleteMessage(message)"]')).click();      
       });
 
       it('in address', function() {
@@ -134,13 +135,15 @@ describe('Suppliers edit page', function() {
         var name1 = element(by.model('newAddr.name1'));
         name1.sendKeys('@hjksd');
         ptor.sleep(500);
-
         element(by.css('[ng-click="addAddress(newAddr)"]')).click();
         element.all(by.css('.growl')).then(function(items) {
           expect(items[0].getText()).toContain('please enter required and valid field to update address');
         });
+        ptor.sleep(100);
+        element(by.css('[ng-click="deleteMessage(message)"]')).click();
       });
 
+  
     });
     
   });

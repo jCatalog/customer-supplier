@@ -31,11 +31,13 @@ node server.js
 
 ### Run Test
 
-Test cases are written using Mocha.
+Test cases are written using Mocha for nodejs testing and protractor for angularjs.
 
 Mocha is a simple, flexible, fun JavaScript test framework for node.js and the browser.
 
-###### *How to run*
+Protractor runs tests against your application running in a real browser, interacting with it as a user would.
+
+###### *How to run node test*
 
 npm install -g mocha
 
@@ -43,6 +45,13 @@ mocha
 
  [![Mocha test framework](http://f.cl.ly/items/3l1k0n2A1U3M1I1L210p/Screen%20Shot%202012-02-24%20at%202.21.43%20PM.png)](http://mochajs.org)
 
+###### *How to run angular test*
+
+npm install -g protractor
+
+protractor
+
+[visit protractor] (http://angular.github.io/protractor/#/)
 
 ### Documentation
 

@@ -85,8 +85,8 @@ describe('Tenants Section', function() {
       });
 
       it('details', function() {
-        var customers = element.all(by.repeater('sd in supplierData'));
-        customers.get(4).click();
+        var suppliers = element.all(by.repeater('sd in supplierData'));
+        suppliers.get(0).click();
         ptor.sleep(500);
 
         element.all(by.tagName('h3')).then(function(items) {

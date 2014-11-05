@@ -14,17 +14,24 @@ describe('Customers page', function() {
     email_helper = require('../helpers/random_email.js');
     browser.get('http://localhost:3035/#/');
     ptor.sleep(500);
+    element.all(by.css('.navbar-nav li')).then(function(items) {
+      items[0].click();
+      ptor.sleep(500);
+    });
   });
 
 
   it('should able to delete the customer when remove button is clicked', function() {
+    var country = element(by.model('srch.customer.country'));
+    if (country != null){
+      country.clear();
+    }
     var cname = element(by.model('srch.customer.customerName'));
     cname.sendKeys('cust');
     element.all(by.css('.btn-primary')).then(function(items) {
       items[1].click();
     });
     ptor.sleep(1000);
-
     element.all(by.css('.btn-default')).then(function(items) {
       items[1].click();
     });
@@ -33,6 +40,8 @@ describe('Customers page', function() {
     element.all(by.css('.growl')).then(function(items) {
       expect(items[0].getText()).toContain('Customer removed Succesfully');
     });
+    ptor.sleep(100);
+    element(by.css('[ng-click="deleteMessage(message)"]')).click();
   });
 
   describe('should remove', function() {
@@ -44,11 +53,9 @@ describe('Customers page', function() {
         items[1].click();
       });
       ptor.sleep(1000);
-
       element.all(by.css('[ng-click="customer_view(customer._id)"]')).then(function(items) {
         items[2].click();
       });
-
       ptor.sleep(500);
       element.all(by.css('.btn-block')).then(function(items) {
         items[8].click();
@@ -56,18 +63,15 @@ describe('Customers page', function() {
       ptor.sleep(500);
     });
 
-    afterEach(function() {
-
-    });
-
     it('the contact when contact delete button is clicked', function() {
-
       element.all(by.css('[ng-click="delete_contact($index)"]')).then(function(items) {
         items[0].click();
       });
       element.all(by.css('.growl')).then(function(items) {
         expect(items[0].getText()).toContain('contacts deleted Succesfully');
       });
+      ptor.sleep(100);
+      element(by.css('[ng-click="deleteMessage(message)"]')).click();
       ptor.sleep(500);
     });
 
@@ -79,6 +83,8 @@ describe('Customers page', function() {
       element.all(by.css('.growl')).then(function(items) {
         expect(items[0].getText()).toContain('address deleted Succesfully');
       });
+      ptor.sleep(100);
+      element(by.css('[ng-click="deleteMessage(message)"]')).click();
       ptor.sleep(500);
     });
     
