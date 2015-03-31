@@ -83,36 +83,23 @@ myApp.controller('searchSpplrCtrl', ['$scope', '$http', '$routeParams','$locatio
           }
       }
     }
- 
+
   $scope.groupToPages();
   
 	$scope.search = function(resrcname){
 		var resrc = supplier;
-		//var srchObj = resrcname=='customer'? $rootScope.srch.customer : $rootScope.srch.supplier;
     var srchObj = $rootScope.srch.supplier;
 		var rqstData = customTransform(resrcname);
-		if(rqstData.length==0){
-			//alert('Fill some entry in the form please');
-      var modalInstance = $modal.open({
-      templateUrl: 'alert.html',
-      controller: 'ModalInstanceCtrl'
-
-      });
-			$scope.searchDirty = false;
-		}
-		else{
-			resrc.searchQuery({url:resrcname+'Search'}, rqstData).$promise.then(function(data){	
-				srchObj.resultList = data;
-				srchObj.searchDirty = true;
-        $scope.data = data;
-         $scope.currentPage = 0;
-         $scope.groupToPages();
-         
-			}).catch(function(error){
-					growl.addErrorMessage("oops! Something went wrong");
-			})
-//       console.log($scope.data);
-		}
+		resrc.searchQuery({url:resrcname+'Search'}, rqstData).$promise.then(function(data){	
+			srchObj.resultList = data;
+			srchObj.searchDirty = true;
+      $scope.data = data;
+       $scope.currentPage = 0;
+       $scope.groupToPages();
+       
+		}).catch(function(error){
+				growl.addErrorMessage("oops! Something went wrong");
+		})
 
 		function customTransform(){
 			var temp = [];
@@ -140,6 +127,7 @@ myApp.controller('searchSpplrCtrl', ['$scope', '$http', '$routeParams','$locatio
 		}
   }
  }]);
+
 myApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
 
   $scope.ok = function () {

@@ -88,55 +88,38 @@ myApp.controller('searchCstmrCtrl', [ '$scope', '$http', '$routeParams','$locati
     var resrc = customer;
     var srchObj = $rootScope.srch.customer;
 		var rqstData = customTransform(resrcname);
-		if(rqstData.length==0){
-			//alert('Fill some entry in the form please');
-      var modalInstance = $modal.open({
-      templateUrl: 'alert.html',
-      controller: 'ModalInstanceCtrl'
-
-      });
-			$scope.searchDirty = false;
-		}
-		else{
 			resrc.searchQuery({url:resrcname+'Search'}, rqstData).$promise.then(function(data){	
 				$scope.srch.customer.resultList = data;
 				srchObj.searchDirty = true;
         $scope.data = data;
          $scope.currentPage = 0;
          $scope.groupToPages();
-         console.log($scope.data);
-         
 			}).catch(function(error){
-          console.log("search");
 					growl.addErrorMessage("oops! Something went wrong");
 			})
-//       console.log($scope.data);
-		}
 
-		function customTransform(){
-			var temp = [];
-			
-			for (key in srchObj){
-				switch(key){
-					case 'customerId':
-					case 'customerName':
-					case 'supplierId':
-					case 'supplierName':
-					case 'city':
-					case 'state':
-					case 'country':
-					// the above are those keys which need to be sent to api search request
-						if(srchObj[key]!=""){
-								temp.push({
-									"key": key,
-									"value": srchObj[key]
-								})						
-							}
-				}
-
-			}
-			return temp;
-		}
+  		function customTransform(){
+  			var temp = [];
+  			for (key in srchObj){
+  				switch(key){
+  					case 'customerId':
+  					case 'customerName':
+  					case 'supplierId':
+  					case 'supplierName':
+  					case 'city':
+  					case 'state':
+  					case 'country':
+  					// the above are those keys which need to be sent to api search request
+  						if(srchObj[key]!=""){
+  								temp.push({
+  									"key": key,
+  									"value": srchObj[key]
+  								})						
+  							}
+  				}
+  			}
+  			return temp;
+  		}
 	}
 }]); 
 myApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {

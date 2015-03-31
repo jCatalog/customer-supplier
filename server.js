@@ -27,11 +27,7 @@ server.route({
 // FOR GUI SERVER
 var API = {
     call: function(opts) {
-        // var url = 'http://'+options.apiIP+opts.url;
         var url = 'http://' + config.server.listenHost + ':' + config.server.listenPort + opts.url;
-
-            console.log(url)
-
 
         var requestOptions = {                   
             headers: { 'content-type':'application/json'}
@@ -41,11 +37,7 @@ var API = {
         if(opts.payload) {
             requestOptions.payload = JSON.stringify(opts.payload);
         }
-        // Add auth
-        // var header = Hawk.client.header(url, opts.method, { credentials: opts.credentials });
-        // requestOptions.headers.Authorization = header.field;
-        
-        // Make call
+       
         if(opts.method === 'POST' || opts.method === 'post')
         {
             Wreck.post(url, requestOptions, opts.callback)
@@ -71,8 +63,7 @@ server.route({
         handler: function(request, reply) {
             API.call({
                 method: 'GET',
-                url: request.path.substring(4),     // slice out the '/api' part from the request path
-                // credentials: options.coreCreds,
+                url: request.path.substring(4),     
                 callback: function(err, res, payload) {
                     if (err) throw err;
                     return reply(payload).header('Content-Type', 'application/octet-stream').header('content-disposition', 'attachment; filename='+request.params.resourcename+'.csv;');
@@ -87,9 +78,8 @@ server.route({
         handler: function(request, reply) {
             API.call({
                 method: request.method,
-                url: request.path.substring(4),     // slice out the '/api' part from the request path
+                url: request.path.substring(4),     
                 payload: request.payload,
-                // credentials: options.coreCreds,
                 callback: function(err, res, payload) {
                     if (err) throw err;
                     else 
@@ -98,6 +88,7 @@ server.route({
             });
         }
     });
+
 server.route({
     method: 'GET',
     path: '/upload/{params*}',
